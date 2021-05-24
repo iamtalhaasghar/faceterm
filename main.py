@@ -2,10 +2,13 @@ from selenium.webdriver import Firefox
 from progress.spinner import Spinner
 from selenium.webdriver.firefox.options import Options
 
-url = 'https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fkfueit.official%2F&tabs=timeline&width=12000&_rdc=2&_rdr'
+pageUrl = 'https://www.facebook.com/GitHub'
+url = 'https://www.facebook.com/plugins/page.php?href={{href_value}}&tabs=timeline&width=500'
+url = url.replace('{{href_value}}', pageUrl)
+
 options = Options()
 options.headless = True
-firefox = Firefox(options=options, executable_path='/home/talha/Programs/geckodriver')
+firefox = Firefox(options=options)
 print('Opening browser...')
 firefox.get(url)
 
@@ -15,11 +18,11 @@ spinner = Spinner('Loading ')
 spinner.start()
 while len(posts) == 0:
     spinner.next()
-    posts = firefox.find_elements_by_tag_name("p")
+    posts = firefox.find_elements_by_xpath('//div[@data-testid="post_message"]')
 
 spinner.finish()
 
-for p in firefox.find_elements_by_tag_name('p'):
+for p in posts:
     print(p.text, end='\n**************************\n')
 
 firefox.close()

@@ -1,0 +1,1 @@
+Stay up to date with latest information & news by viewing posts from Facebook public pages directly into your terminal without login. 
